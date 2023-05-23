@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+#include<queue>
+int furthestBuilding(int ladders, int bricks, vector<int> &arr)
+{
+    priority_queue<int,vector<int> > pq;
+    int i;
+    for(i=0;i<arr.size()-1;i++)
+    {
+        // cout<<i<<endl;
+        int diff=arr[i+1]-arr[i];
+        if(diff>0)
+        {
+            pq.push(diff);
+            bricks=bricks-diff;
+            if(bricks<0)
+            {
+                if(ladders<=0)
+                {
+                    return i+1;
+                }
+               
+                    bricks=bricks+pq.top();
+                    ladders--;
+                    pq.pop();
+                
+            }
+        }
+    }
+    // cout<<"saeed"<<endl;
+    return i+1;
+}
