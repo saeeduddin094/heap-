@@ -1,0 +1,59 @@
+in this question we solved in the following step.
+1-create mini heap and push all the first element of each vectors
+2-find the min in mini heap just retrived by top element and push the next element of top element into the priority queue .
+process this while loop until queue will not become empty.
+
+
+
+#include <bits/stdc++.h> 
+#include<queue>
+class node
+{
+    public:
+    int data;
+    int row;
+    int col;
+    int size;
+    node(int val ,int r,int c,int s)
+    {
+        data=val;
+        row=r;
+        col=c;
+        size=s;
+    }
+};
+class comp
+{
+    public:
+    bool operator()(node* a,node* b)
+    {
+        return a->data>b->data;
+    }
+};
+vector<int> mergeKSortedArrays(vector<vector<int>> &arr, int k)
+{
+   priority_queue<node* ,vector<node* > , comp> miniheap;
+   for(int i=0;i<k;i++)
+   {
+       int ele=arr[i][0];
+       int size=arr[i].size();
+       miniheap.push(new node(ele,i,0,size));
+   }
+   vector<int> ans;
+   while(miniheap.size()>0)
+   {
+       // first step 
+       node* temp=miniheap.top();
+       int ele=temp->data;
+       int r=temp->row;
+       int c=temp->col;
+       int size=temp->size;
+       miniheap.pop();
+       ans.push_back(ele);
+       if(c+1<size)
+       {
+           miniheap.push(new node(arr[r][c+1],r,c+1,size));
+       }
+   }
+   return ans;
+}
